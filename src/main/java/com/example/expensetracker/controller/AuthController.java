@@ -34,7 +34,7 @@ public class AuthController {
 
     Map<String, Object> response = new HashMap<>();
     response.put("success", true);
-    response.put("message", "User registered successfully!!");
+    response.put("message", "User registered successfully!!!!");
 
     Map<String, Object> userData = new HashMap<>();
     userData.put("username", created.getUsername());
