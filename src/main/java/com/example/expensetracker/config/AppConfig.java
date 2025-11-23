@@ -23,9 +23,10 @@ public class AppConfig {
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
 
-    config.setAllowedOrigins(List.of("http://localhost:5173","https://expensetracker-frontend-roan.vercel.app/"));
+    config.setAllowedOriginPatterns(List.of("http://localhost:5173","https://*.vercel.app","https://expensetracker-frontend-roan.vercel.app/"));
     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     config.setAllowedHeaders(List.of("*"));
+    config.setExposedHeaders(List.of("Authorization"));
     config.setAllowCredentials(true);
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
