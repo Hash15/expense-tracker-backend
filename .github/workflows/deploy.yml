@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B clean package --file pom.xml
 
       - name: Copy JAR to EC2
         uses: appleboy/scp-action@v0.1.6
@@ -39,7 +39,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             # Move uploaded jar to a fixed name
-            mv /home/ec2-user/expense-tracker-backend-*.jar /home/ec2-user/expense.jar
+            mv /home/ec2-user/*.jar /home/ec2-user/expense.jar
 
             # Restart backend
             sudo systemctl restart expense
