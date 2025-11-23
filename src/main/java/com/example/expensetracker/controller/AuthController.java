@@ -4,6 +4,8 @@ import com.example.expensetracker.config.JwtTokenUtil;
 import com.example.expensetracker.dto.*;
 import com.example.expensetracker.entity.User;
 import com.example.expensetracker.service.UserService;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.http.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -24,8 +26,24 @@ public class AuthController {
 
   @PostMapping("/register")
   public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
-    User created = userService.register(req.getUsername(), req.getPassword(), req.getFullName());
-    return ResponseEntity.ok(created.getUsername());
+    User created = userService.register(
+        req.getUsername(),
+        req.getPassword(),
+        req.getFullName()
+    );
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("success", true);
+    response.put("message", "User registered successfully");
+
+    Map<String, Object> userData = new HashMap<>();
+    userData.put("username", created.getUsername());
+    userData.put("fullName", created.getFullName());
+    userData.put("id", created.getId()); // if you have id
+
+    response.put("user", userData);
+
+    return ResponseEntity.ok(response);
   }
 
   @PostMapping("/login")
