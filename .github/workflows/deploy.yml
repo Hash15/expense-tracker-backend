@@ -38,8 +38,11 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            # Move uploaded jar to a fixed name
-            mv /home/ec2-user/*.jar /home/ec2-user/expense.jar
-
-            # Restart backend
+            # find the newest uploaded jar
+            LATEST_JAR=$(ls -t /home/ec2-user/*.jar | head -1)
+            
+            # overwrite expense.jar with the latest jar
+            cp "$LATEST_JAR" /home/ec2-user/expense.jar
+            
+            # restart service
             sudo systemctl restart expense
